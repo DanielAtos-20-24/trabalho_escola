@@ -143,6 +143,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const sala = parametros.get('sala') || '';
         const equipamento = botao.getAttribute('data-nome') || '';
         const btnManutencao = document.getElementById('btnManutencao');
+        const btnEditarEquipamento = document.getElementById('btnEditarEquipamento');
+        const btnMoverEquipamento = document.getElementById('btnMoverEquipamento');
+
+        if (btnEditarEquipamento) {
+            btnEditarEquipamento.href =
+                'editar_equipamento.php?bloco=' + encodeURIComponent(bloco) +
+                '&sala=' + encodeURIComponent(sala) +
+                '&equipamento=' + encodeURIComponent(equipamento);
+        }
+
+        if (btnMoverEquipamento) {
+            btnMoverEquipamento.href =
+                'mover_equipamento.php?bloco=' + encodeURIComponent(bloco) +
+                '&sala=' + encodeURIComponent(sala) +
+                '&equipamento=' + encodeURIComponent(equipamento);
+        }
         if (btnManutencao) {
             btnManutencao.href = 'manutencao.php?bloco=' + encodeURIComponent(bloco) + '&sala=' + encodeURIComponent(sala) + '&equipamento=' + encodeURIComponent(equipamento);
         }

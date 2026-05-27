@@ -175,6 +175,16 @@ if ($indiceSalaAtual !== null) {
                                 <i class="bi bi-cpu"></i>
                                 Troca de peças
                             </a>
+
+                            <a id="btnEditarEquipamento" href="#" class="action-btn warning">
+                                <i class="bi bi-pencil-square"></i>
+                                Editar equipamento
+                            </a>
+
+                            <a id="btnMoverEquipamento" href="#" class="action-btn info">
+                                <i class="bi bi-arrow-left-right"></i>
+                                Mover equipamento
+                            </a>
                         </div>
                     </div>
                 </section>

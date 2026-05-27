@@ -620,6 +620,33 @@ body {
     filter: brightness(1.12);
 }
 
+.edit-photo-preview {
+    width: 260px;
+    height: 180px;
+    overflow: hidden;
+    background: #020617;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.edit-photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-photo-check {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    color: var(--text-main);
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
 @media (max-width: 992px) {
     .sidebar {
         position: relative;
