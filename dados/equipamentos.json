@@ -1,18 +1,153 @@
 [
     {
+        "id": "TESTE-001",
+        "bloco": "T",
+        "sala": "T01",
+        "equipamento": "Teste",
+        "foto": "",
+        "especificacoes": {
+            "Marca": "Teste",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:25:48"
+    },
+    {
         "id": "A01-computador",
         "bloco": "A",
         "sala": "A01",
         "equipamento": "Computador",
-        "foto": "assets\/img\/a01\/computador.jpeg",
+        "foto": "assets\/img\/a01\/computador.jpg",
         "especificacoes": {
+            "Marca": "Dell",
+            "Modelo": "Optiplex 3040",
+            "Processador": "Intel i5",
+            "Memória": "8GB",
+            "Armazenamento": "SSD 240GB",
+            "Placa de vídeo": "Intel HD",
+            "Patrimônio": "000123",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-monitor",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Monitor",
+        "foto": "assets\/img\/a01\/monitor.jpg",
+        "especificacoes": {
+            "Polegada": "22 polegadas",
+            "Marca": "LG",
+            "Patrimônio": "000124",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-teclado",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Teclado",
+        "foto": "assets\/img\/a01\/teclado.jpg",
+        "especificacoes": {
+            "Marca": "Logitech",
+            "Patrimônio": "000125",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-mouse",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Mouse",
+        "foto": "assets\/img\/a01\/mouse.jpg",
+        "especificacoes": {
+            "Marca": "Logitech",
+            "Patrimônio": "000126",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-estabilizador",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Estabilizador",
+        "foto": "assets\/img\/a01\/estabilizador.jpg",
+        "especificacoes": {
+            "Marca": "SMS",
+            "Voltagem": "110V",
+            "Patrimônio": "000127",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-som",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Som",
+        "foto": "assets\/img\/a01\/som.jpg",
+        "especificacoes": {
+            "Marca": "JBL",
+            "Patrimônio": "000128",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-projetor",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Projetor",
+        "foto": "assets\/img\/a01\/projetor.jpg",
+        "especificacoes": {
+            "Marca": "Epson",
+            "Modelo": "PowerLite S41",
+            "Qualidade da lâmpada": "Boa",
+            "Situação": "EM MANUTENÇÃO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "A01-lousa",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Lousa",
+        "foto": "assets\/img\/a01\/lousa.jpg",
+        "especificacoes": {
+            "Marca": "N\/A",
+            "Qualidade da lousa": "Boa",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "C01-computador",
+        "bloco": "C",
+        "sala": "C01",
+        "equipamento": "Computador",
+        "foto": "assets\/img\/c01\/computador.jpg",
+        "especificacoes": {
+            "Marca": "Lenovo",
+            "Modelo": "ThinkCentre",
             "Processador": "Intel i5 4440",
             "Memória": "6GB DDR3",
             "Armazenamento": "SSD 240GB",
             "Placa de vídeo": "NVIDIA GeForce 705",
-            "Patrimônio": "A definir",
-            "Situação": "A DEFINIR"
+            "Patrimônio": "000548",
+            "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-27 23:42:50"
+        "atualizado_em": "2026-05-28 00:33:52",
+        "origem": "importacao_xlsx"
     }
 ]

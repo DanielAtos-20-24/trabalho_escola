@@ -180,6 +180,7 @@ foreach ($linhas as $numeroLinha => $dadosLinha) {
     }
 }
 
+
 file_put_contents(
     $arquivoEquipamentos,
     json_encode($equipamentos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)

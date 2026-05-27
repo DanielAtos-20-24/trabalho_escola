@@ -38,8 +38,8 @@ require_once __DIR__ . '/dados/salas.php';
     <main class="content">
         <div class="page-header">
             <div>
-                <h2>Importar planilha CSV</h2>
-                <p>Atualize os dados dos equipamentos automaticamente por arquivo CSV.</p>
+                <h2>Importar planilha XLSX</h2>
+                <p>Atualize os dados dos equipamentos automaticamente por arquivo XLSX.</p>
             </div>
         </div>
 
@@ -50,7 +50,7 @@ require_once __DIR__ . '/dados/salas.php';
                 </div>
 
                 <div>
-                    <h3>Enviar arquivo CSV</h3>
+                    <h3>Enviar arquivo XLSX</h3>
                     <p>Use a estrutura padrão de colunas para atualizar equipamentos, patrimônios, status e especificações.</p>
                 </div>
             </div>
@@ -58,16 +58,22 @@ require_once __DIR__ . '/dados/salas.php';
             <form action="processar_importacao.php" method="POST" enctype="multipart/form-data" class="maintenance-form">
                 <div class="row g-3">
                     <div class="col-md-12">
-                        <label class="form-label">Arquivo CSV</label>
+                        <label class="form-label">Arquivo XLSX</label>
                         <input type="file" name="planilha" class="form-control" accept=".xlsx,.xls" required>
                     </div>
                 </div>
 
-                <div class="maintenance-actions">
-                    <button type="submit" class="action-btn warning">
-                        <i class="bi bi-upload"></i> Importar XLSX
-                    </button>
-                </div>
+           <div class="maintenance-actions">
+                <button type="submit" class="action-btn warning">
+                    <i class="bi bi-upload"></i> Importar XLSX
+                </button>
+
+                <a href="assets/modelos/modelo_importacao_equipamentos.xlsx"
+                class="action-btn info"
+                download>
+                    <i class="bi bi-download"></i> Planilha modelo
+                </a>
+            </div>
             </form>
         </section>
 

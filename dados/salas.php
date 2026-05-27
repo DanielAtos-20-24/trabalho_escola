@@ -115,6 +115,30 @@ function urlSala($sala)
     return 'sala.php?bloco=' . rawurlencode($sala['bloco']) . '&sala=' . rawurlencode($sala['codigo']);
 }
 
+function equipamentosPersonalizados()
+{
+    $arquivo = __DIR__ . '/equipamentos.json';
+
+    if (!file_exists($arquivo)) {
+        file_put_contents($arquivo, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
+    return json_decode(file_get_contents($arquivo), true) ?? [];
+}
+
+function buscarEquipamentoPersonalizado($codigoSala, $nomeEquipamento)
+{
+    $equipamentos = equipamentosPersonalizados();
+    $idBuscado = strtoupper($codigoSala) . '-' . strtolower($nomeEquipamento);
+
+    foreach ($equipamentos as $equipamento) {
+        if (($equipamento['id'] ?? '') === $idBuscado) {
+            return $equipamento;
+        }
+    }
+
+    return null;
+}
 
 function equipamentosDaSala($sala)
 {
@@ -205,7 +229,15 @@ function equipamentosDaSala($sala)
     $equipamentos = [];
 
     foreach ($baseEquipamentos as $index => $equip) {
+        $personalizado = buscarEquipamentoPersonalizado($codigoSala, $equip['nome']);
+
         $foto = fotoEquipamento($codigoSala, $equip['nome']);
+        $especificacoes = $equip['especificacoes'];
+
+        if ($personalizado) {
+            $foto = $personalizado['foto'] ?? $foto;
+            $especificacoes = $personalizado['especificacoes'] ?? $especificacoes;
+        }
 
         $equipamentos[] = [
             'id' => $index + 1,
@@ -213,8 +245,8 @@ function equipamentosDaSala($sala)
             'icone' => $equip['icone'],
             'foto' => $foto,
             'descricao' => $equip['nome'] . ' da sala ' . $descricaoSala . '.',
-            'especificacoes' => $equip['especificacoes'],
-            'situacao' => $equip['especificacoes']['Situação'] ?? 'A DEFINIR',
+            'especificacoes' => $especificacoes,
+            'situacao' => $especificacoes['Situação'] ?? 'A DEFINIR',
         ];
     }
 
