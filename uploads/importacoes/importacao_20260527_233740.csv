@@ -1,0 +1,4 @@
+﻿bloco,sala,equipamento,marca,modelo,patrimonio,situacao,processador,memoria,armazenamento,placa_video,polegada,voltagem,qualidade_lampada,qualidade_lousa,foto
+A,A01,Computador,Dell,Optiplex 3040,000123,FUNCIONANDO,Intel i5,8GB,SSD 240GB,Intel HD,,,,,assets/img/a01/computador.jpg
+A,A01,Monitor,LG,22MK400,000124,FUNCIONANDO,,,,,22 polegadas,,,,assets/img/a01/monitor.jpg
+C,C01,Projetor,Epson,PowerLite S41,000888,EM MANUTENÇÃO,,,,,,,Boa,,assets/img/c01/projetor.jpg

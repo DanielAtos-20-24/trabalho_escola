@@ -83,6 +83,9 @@ $topSalas = array_slice($manutencoesPorSala, 0, 6, true);
 
             <div class="menu-title">Menu</div>
             <a href="index.php" class="menu-link active"><i class="bi bi-grid-1x2"></i> Setores</a>
+            <a href="importar_planilha.php" class="menu-link">
+                <i class="bi bi-file-earmark-arrow-up"></i> Importar planilha
+            </a>
         </aside>
 
         <main class="content">

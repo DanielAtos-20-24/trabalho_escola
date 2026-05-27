@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "id": "A01-computador",
+        "bloco": "A",
+        "sala": "A01",
+        "equipamento": "Computador",
+        "foto": "assets\/img\/a01\/computador.jpeg",
+        "especificacoes": {
+            "Processador": "Intel i5 4440",
+            "Memória": "6GB DDR3",
+            "Armazenamento": "SSD 240GB",
+            "Placa de vídeo": "NVIDIA GeForce 705",
+            "Patrimônio": "A definir",
+            "Situação": "A DEFINIR"
+        },
+        "atualizado_em": "2026-05-27 23:42:50"
+    }
+]
