@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/fotos.php';
 function e($valor)
 {
     return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
@@ -115,39 +115,6 @@ function urlSala($sala)
     return 'sala.php?bloco=' . rawurlencode($sala['bloco']) . '&sala=' . rawurlencode($sala['codigo']);
 }
 
-// ============================================================================
-// CONFIGURAÇÃO DE IMAGENS - ADICIONE OU MODIFIQUE OS CAMINHOS AQUI
-// ============================================================================
-
-function configurarImagensEquipamentos()
-{
-    return [
-        'computador' => true,  // true = tem foto, false = sem foto
-        'monitor' => true,
-        'teclado' => false,
-        'mouse' => false,
-        'estabilizador' => false,
-        'som' => false,
-        'projetor' => false,
-        'lousa' => false,
-    ];
-}
-
-function obterCaminhoImagem($nomeEquipamento, $codigoSala)
-{
-    $config = configurarImagensEquipamentos();
-    $nomeNormalizado = strtolower($nomeEquipamento);
-    
-    if (!isset($config[$nomeNormalizado]) || !$config[$nomeNormalizado]) {
-        return '';
-    }
-    
-    return 'assets/img/' . $nomeNormalizado . '_' . $codigoSala . '.jpeg';
-}
-
-// ============================================================================
-// FIM DA CONFIGURAÇÃO DE IMAGENS
-// ============================================================================
 
 function equipamentosDaSala($sala)
 {
@@ -223,7 +190,7 @@ function equipamentosDaSala($sala)
 
     $equipamentos = [];
     foreach ($baseEquipamentos as $index => $equip) {
-        $foto = obterCaminhoImagem($equip['nome'], $codigoSala);
+        $foto = fotoEquipamento($codigoSala, $equip['nome']);
         
         $equipamentos[] = [
             'id' => $index + 1,
