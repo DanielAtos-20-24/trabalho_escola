@@ -6,6 +6,42 @@ $sala = obterSala($_GET['bloco'] ?? '', $_GET['sala'] ?? '');
 $equipamentos = $sala ? equipamentosDaSala($sala) : [];
 $blocoAtual = $sala['bloco'] ?? '';
 $tituloPagina = $sala ? $sala['titulo'] . ' - ' . nomeBloco($sala['bloco']) : 'Sala não encontrada';
+
+$arquivoManutencoes = __DIR__ . '/dados/manutencoes.json';
+
+if (!file_exists($arquivoManutencoes)) {
+    file_put_contents($arquivoManutencoes, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+$manutencoes = json_decode(file_get_contents($arquivoManutencoes), true) ?? [];
+
+// Navegação entre salas do mesmo setor
+$salasDoSetor = [];
+$indiceSalaAtual = null;
+foreach (salasSistema() as $setorInfo) {
+    if (($setorInfo['id'] ?? '') === ($sala['bloco'] ?? '')) {
+        $salasDoSetor = array_values($setorInfo['salas']);
+        break;
+    }
+}
+if ($sala) {
+    foreach ($salasDoSetor as $i => $s) {
+        if (($s['codigo'] ?? '') === ($sala['codigo'] ?? '')) {
+            $indiceSalaAtual = $i;
+            break;
+        }
+    }
+}
+$salaPrev = null;
+$salaNext = null;
+if ($indiceSalaAtual !== null) {
+    if ($indiceSalaAtual > 0) {
+        $salaPrev = $salasDoSetor[$indiceSalaAtual - 1];
+    }
+    if ($indiceSalaAtual < count($salasDoSetor) - 1) {
+        $salaNext = $salasDoSetor[$indiceSalaAtual + 1];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -40,7 +76,27 @@ $tituloPagina = $sala ? $sala['titulo'] . ' - ' . nomeBloco($sala['bloco']) : 'S
         <main class="content">
             <div class="page-header">
                 <div>
-                    <h2><?= e($sala['titulo'] ?? 'Sala não encontrada') ?></h2>
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <h2 style="margin:0;"><?= e($sala['titulo'] ?? 'Sala não encontrada') ?></h2>
+                        <div class="room-nav">
+                            <?php if ($salaPrev): ?>
+                                <a href="<?= e(urlSala($salaPrev)) ?>" class="nav-arrow" title="Sala anterior" data-bloco="<?= e($salaPrev['bloco']) ?>" data-sala="<?= e($salaPrev['codigo']) ?>">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            <?php else: ?>
+                                <span class="nav-arrow disabled"><i class="bi bi-chevron-left"></i></span>
+                            <?php endif; ?>
+
+                            <?php if ($salaNext): ?>
+                                <a href="<?= e(urlSala($salaNext)) ?>" class="nav-arrow" title="Próxima sala" data-bloco="<?= e($salaNext['bloco']) ?>" data-sala="<?= e($salaNext['codigo']) ?>">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            <?php else: ?>
+                                <span class="nav-arrow disabled"><i class="bi bi-chevron-right"></i></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
                     <p><?= $sala ? e(nomeBloco($sala['bloco'])) . ' - clique em um equipamento para visualizar as especificações abaixo.' : 'Confira o bloco e a sala informados.' ?></p>
                 </div>
 
@@ -54,22 +110,34 @@ $tituloPagina = $sala ? $sala['titulo'] . ' - ' . nomeBloco($sala['bloco']) : 'S
             <?php else: ?>
                 <div class="equipment-grid">
                     <?php foreach ($equipamentos as $item): ?>
-                        <button type="button"
-                                class="equipment-card"
-                                data-nome="<?= e($item['nome']) ?>"
-                                data-icone="<?= e($item['icone']) ?>"
-                                data-foto="<?= e($item['foto']) ?>"
-                                data-descricao="<?= e($item['descricao']) ?>"
-                                data-processador="<?= e($item['processador']) ?>"
-                                data-memoria="<?= e($item['memoria']) ?>"
-                                data-armazenamento="<?= e($item['armazenamento']) ?>"
-                                data-placa-video="<?= e($item['placa_video']) ?>"
-                                data-patrimonio="<?= e($item['patrimonio']) ?>"
-                                data-situacao="<?= e($item['situacao']) ?>">
-                            <div class="equipment-icon"><i class="bi <?= e($item['icone']) ?>"></i></div>
-                            <div class="equipment-name"><?= e($item['nome']) ?></div>
-                            <div class="equipment-status"><?= e($item['situacao']) ?></div>
-                        </button>
+                        <?php
+                            $historicoEquipamento = array_values(array_filter($manutencoes, function ($manutencao) use ($sala, $item) {
+                                return ($manutencao['bloco'] ?? '') === ($sala['bloco'] ?? '')
+                                    && ($manutencao['sala'] ?? '') === ($sala['codigo'] ?? '')
+                                    && strtolower($manutencao['equipamento'] ?? '') === strtolower($item['nome'] ?? '');
+                            }));
+                            ?>
+
+                            <button type="button"
+                                    class="equipment-card"
+                                    data-nome="<?= e($item['nome']) ?>"
+                                    data-icone="<?= e($item['icone']) ?>"
+                                    data-foto="<?= e($item['foto']) ?>"
+                                    data-descricao="<?= e($item['descricao']) ?>"
+                                    data-especificacoes='<?= e(json_encode($item["especificacoes"], JSON_UNESCAPED_UNICODE)) ?>'
+                                    data-historico='<?= e(json_encode($historicoEquipamento, JSON_UNESCAPED_UNICODE)) ?>'>
+                                <div class="equipment-icon">
+                                    <i class="bi <?= e($item['icone']) ?>"></i>
+                                </div>
+
+                                <div class="equipment-name">
+                                    <?= e($item['nome']) ?>
+                                </div>
+
+                                <div class="equipment-status">
+                                    <?= e($item['situacao']) ?>
+                                </div>
+                            </button>
                     <?php endforeach; ?>
                 </div>
 
@@ -86,13 +154,27 @@ $tituloPagina = $sala ? $sala['titulo'] . ' - ' . nomeBloco($sala['bloco']) : 'S
                         <h3 id="detalheNome">Equipamento</h3>
                         <p id="detalheDescricao" class="details-description"></p>
 
-                        <div class="spec-grid">
-                            <div class="spec-item"><span>Processador</span><strong id="detalheProcessador"></strong></div>
-                            <div class="spec-item"><span>Memória</span><strong id="detalheMemoria"></strong></div>
-                            <div class="spec-item"><span>Armazenamento</span><strong id="detalheArmazenamento"></strong></div>
-                            <div class="spec-item"><span>Placa de vídeo</span><strong id="detalhePlacaVideo"></strong></div>
-                            <div class="spec-item"><span>Patrimônio</span><strong id="detalhePatrimonio"></strong></div>
-                            <div class="spec-item"><span>Situação</span><strong id="detalheSituacao"></strong></div>
+                       <div id="detalheEspecificacoes" class="spec-grid"></div>
+                       <div class="equipment-history">
+                            <div class="history-header">
+                                <h4>Histórico de manutenções</h4>
+                            </div>
+
+                            <div id="historicoManutencoes" class="history-list">
+                                <p class="history-empty">Selecione um equipamento para visualizar o histórico.</p>
+                            </div>
+                        </div>
+
+                        <div class="details-actions">
+                            <a id="btnManutencao" href="#" class="action-btn warning">
+                                <i class="bi bi-tools"></i>
+                                Registrar manutenção
+                            </a>
+
+                            <a id="btnTrocaPecas" href="#" class="action-btn info">
+                                <i class="bi bi-cpu"></i>
+                                Troca de peças
+                            </a>
                         </div>
                     </div>
                 </section>

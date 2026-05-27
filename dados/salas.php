@@ -125,85 +125,96 @@ function equipamentosDaSala($sala)
         [
             'nome' => 'Computador',
             'icone' => 'bi-pc-display-horizontal',
-            'processador' => 'Intel i5 4440',
-            'memoria' => '6GB DDR3',
-            'armazenamento' => 'SSD 240GB',
-            'placa_video' => 'NVIDIA GeForce 705',
+            'especificacoes' => [
+                'Processador' => 'Intel i5 4440',
+                'Memória' => '6GB DDR3',
+                'Armazenamento' => 'SSD 240GB',
+                'Placa de vídeo' => 'NVIDIA GeForce 705',
+                'Patrimônio' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Monitor',
             'icone' => 'bi-display',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Polegada' => 'A definir',
+                'Marca' => 'A definir',
+                'Patrimônio' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Teclado',
             'icone' => 'bi-keyboard',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Marca' => 'A definir',
+                'Patrimônio' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Mouse',
             'icone' => 'bi-mouse',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Marca' => 'A definir',
+                'Patrimônio' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Estabilizador',
             'icone' => 'bi-lightning-charge',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Marca' => 'A definir',
+                'Voltagem' => 'A definir',
+                'Patrimônio' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Som',
             'icone' => 'bi-speaker',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Marca' => 'A definir',
+                'Patrimônio' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Projetor',
             'icone' => 'bi-projector',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Marca' => 'A definir',
+                'Modelo' => 'A definir',
+                'Qualidade da lâmpada' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
         [
             'nome' => 'Lousa',
             'icone' => 'bi-easel',
-            'processador' => '-',
-            'memoria' => '-',
-            'armazenamento' => '-',
-            'placa_video' => '-',
+            'especificacoes' => [
+                'Marca' => 'A definir',
+                'Qualidade da lousa' => 'A definir',
+                'Situação' => 'A DEFINIR',
+            ],
         ],
     ];
 
     $equipamentos = [];
+
     foreach ($baseEquipamentos as $index => $equip) {
         $foto = fotoEquipamento($codigoSala, $equip['nome']);
-        
+
         $equipamentos[] = [
             'id' => $index + 1,
             'nome' => $equip['nome'],
             'icone' => $equip['icone'],
             'foto' => $foto,
             'descricao' => $equip['nome'] . ' da sala ' . $descricaoSala . '.',
-            'processador' => $equip['processador'],
-            'memoria' => $equip['memoria'],
-            'armazenamento' => $equip['armazenamento'],
-            'placa_video' => $equip['placa_video'],
-            'patrimonio' => 'A definir',
-            'situacao' => 'A DEFINIR',
+            'especificacoes' => $equip['especificacoes'],
+            'situacao' => $equip['especificacoes']['Situação'] ?? 'A DEFINIR',
         ];
     }
 
