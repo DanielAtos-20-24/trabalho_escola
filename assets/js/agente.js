@@ -103,10 +103,36 @@ function processarComandoAgente(comando) {
 function abrirSalaPorTexto(texto) {
     const match = String(texto).toUpperCase().match(/\b([ACDE])\s?0?([1-9])\b/);
 
-    if (!match) {
-        agentMessage('Não entendi. Tente: importar planilha, abrir sala D02, ver chamados ou últimas alterações.');
-        return;
+    async function consultarIAAgente(comando) {
+    agentMessage('Estou analisando sua solicitação...');
+
+    try {
+        const resposta = await fetch('api/agente_ia.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ mensagem: comando })
+        });
+
+        const dados = await resposta.json();
+
+        if (!dados.ok) {
+            agentMessage(dados.resposta || 'Não consegui consultar a IA agora.');
+            return;
+        }
+
+        agentMessage(dados.resposta || 'Encontrei uma opção para você.');
+
+        if (dados.tipo === 'redirect' && dados.url) {
+            setTimeout(() => {
+                window.location.href = dados.url;
+            }, 700);
+        }
+    } catch (erro) {
+        agentMessage('Não consegui conectar com a IA agora. Tente: importar planilha, abrir sala D02 ou ver chamados.');
     }
+}
 
     const bloco = match[1];
     let numero = match[2];

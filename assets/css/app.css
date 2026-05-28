@@ -166,44 +166,75 @@ body {
 }
 
 .sector-icon,
-.equipment-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--primary-soft);
-    color: var(--primary);
+.content-block {
+    margin-top: 28px;
+}
+
+.sector-card {
+    min-height: 255px;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(249, 115, 22, 0.10), transparent 32%),
+        linear-gradient(180deg, #1e293b, #111827);
+    border: 1px solid rgba(51, 65, 85, 0.95);
+    border-radius: 22px;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22);
+    transition: 0.22s ease;
+}
+
+.sector-card:hover {
+    border-color: rgba(249, 115, 22, 0.65);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.30);
 }
 
 .sector-icon {
-    width: 58px;
-    height: 58px;
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
     margin-bottom: 18px;
-    border-radius: 18px;
+    color: var(--primary);
+    background: rgba(249, 115, 22, 0.14);
+    border-radius: 17px;
     font-size: 28px;
 }
 
 .sector-card h5 {
-    margin: 0 0 10px;
-    font-size: 22px;
-    font-weight: 800;
+    margin: 0 0 18px;
+    color: #f8fafc;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
 }
 
 .room-links {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 18px;
 }
 
 .room-link {
-    padding: 8px 14px;
-    color: var(--text-main);
-    font-size: 14px;
+    min-width: 52px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #e5e7eb;
+    background: rgba(15, 23, 42, 0.70);
+    border: 1px solid rgba(71, 85, 105, 0.85);
+    border-radius: 12px;
     text-decoration: none;
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    transition: 0.2s;
+    font-size: 14px;
+    font-weight: 800;
+    transition: 0.18s ease;
+}
+
+.room-link:hover {
+    color: #fff;
+    background: rgba(249, 115, 22, 0.18);
+    border-color: var(--primary);
+    transform: translateY(-2px);
 }
 
 .room-link:hover {
@@ -821,6 +852,90 @@ body {
     box-shadow: 0 0 12px #38bdf8;
 }
 
+.dashboard-list-card {
+    max-height: 620px;
+    overflow: hidden;
+}
+
+.dashboard-list-card .dashboard-list {
+    max-height: 455px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.dashboard-list-card .dashboard-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dashboard-list-card .dashboard-list::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 999px;
+}
+
+.dashboard-list-card .dashboard-list::-webkit-scrollbar-thumb {
+    background: rgba(249, 115, 22, 0.65);
+    border-radius: 999px;
+}
+
+.dashboard-list-card .dashboard-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(249, 115, 22, 0.9);
+}
+
+.import-history-list {
+    max-height: 348px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.import-history-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.import-history-list::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 999px;
+}
+
+.import-history-list::-webkit-scrollbar-thumb {
+    background: rgba(34, 197, 94, 0.65);
+    border-radius: 999px;
+}
+
+.import-history-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.9);
+}
+
+.dashboard-list-card .dashboard-list {
+    max-height: 302px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.import-history-list {
+    max-height: 348px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.delete-mini-btn {
+    width: 32px;
+    height: 32px;
+    display: inline-grid;
+    place-items: center;
+    margin-top: 8px;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.10);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.delete-mini-btn:hover {
+    color: #fff;
+    background: #ef4444;
+    transform: translateY(-2px);
+}
 @keyframes agentBlink {
     0%, 92%, 100% {
         transform: scaleY(1);

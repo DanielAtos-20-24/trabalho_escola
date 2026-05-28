@@ -170,17 +170,27 @@ $topSalas = array_slice($manutencoesPorSala, 0, 6, true);
                                             </div>
 
                                             <div class="item-side">
-                                                <small><?= e($m['data'] ?? '') ?></small>
-                                                <span class="mini-status <?= e($statusClasse) ?>">
-                                                    <?= e($m['status'] ?? '') ?>
-                                                </span>
+                                                    <small><?= e($m['data'] ?? '') ?></small>
+
+                                                    <span class="mini-status <?= e($statusClasse) ?>">
+                                                        <?= e($m['status'] ?? '') ?>
+                                                    </span>
+
+                                                    <?php if (!empty($m['id'])): ?>
+                                                        <a href="excluir_manutencao.php?id=<?= e($m['id']) ?>&bloco=<?= e($m['bloco'] ?? '') ?>&sala=<?= e($m['sala'] ?? '') ?>"
+                                                           class="delete-mini-btn"
+                                                           onclick="return confirm('Tem certeza que deseja excluir esta manutenção?')"
+                                                           title="Excluir manutenção">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-                        </section>
-                    </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </section>
+                        </div>
 
                     <div class="col-lg-6">
                         <section id="salas-com-chamados" class="dashboard-list-card">
@@ -228,8 +238,8 @@ $topSalas = array_slice($manutencoesPorSala, 0, 6, true);
             </section>
 
             <!-- Bloco 2: salas e importações -->
-            <section class="content-block">
-                <div class="row g-4 mb-4">
+            <section class="content-block mb-4">
+                <div class="row g-3 mb-4">
                     <?php foreach ($setores as $setor): ?>
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <section class="sector-card">
