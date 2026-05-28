@@ -27,7 +27,7 @@
             "Patrimônio": "000123",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -42,7 +42,7 @@
             "Patrimônio": "000124",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -56,7 +56,7 @@
             "Patrimônio": "000125",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -70,7 +70,7 @@
             "Patrimônio": "000126",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -85,7 +85,7 @@
             "Patrimônio": "000127",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -99,7 +99,7 @@
             "Patrimônio": "000128",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -114,7 +114,7 @@
             "Qualidade da lâmpada": "Boa",
             "Situação": "EM MANUTENÇÃO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -128,7 +128,7 @@
             "Qualidade da lousa": "Boa",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     },
     {
@@ -147,7 +147,22 @@
             "Patrimônio": "000548",
             "Situação": "FUNCIONANDO"
         },
-        "atualizado_em": "2026-05-28 00:33:52",
+        "atualizado_em": "2026-05-28 14:43:22",
+        "origem": "importacao_xlsx"
+    },
+    {
+        "id": "D02-projetor",
+        "bloco": "D",
+        "sala": "D02",
+        "equipamento": "Projetor",
+        "foto": "assets\/img\/d02\/projetor.jpg",
+        "especificacoes": {
+            "Marca": "Benq",
+            "Modelo": "MX166",
+            "Qualidade da lâmpada": "Boa",
+            "Situação": "FUNCIONANDO"
+        },
+        "atualizado_em": "2026-05-28 14:43:22",
         "origem": "importacao_xlsx"
     }
 ]
