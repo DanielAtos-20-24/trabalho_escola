@@ -139,51 +139,89 @@ $topSalas = array_slice($manutencoesPorSala, 0, 6, true);
 
                 <div class="row g-4">
                     <div class="col-lg-6">
-                        <section class="maintenance-card">
-                            <h4>Últimas manutenções</h4>
-                            <div class="list-compact mt-3">
-                                <?php if (empty($ultimasManutencoes)): ?>
-                                    <p class="text-muted">Nenhuma manutenção registrada.</p>
-                                <?php else: ?>
+                        <section class="dashboard-list-card">
+                            <div class="dashboard-list-header">
+                                <div>
+                                    <h4>Últimas manutenções</h4>
+                                    <span>Chamados recentes registrados</span>
+                                </div>
+                                <i class="bi bi-tools"></i>
+                            </div>
+
+                            <?php if (empty($ultimasManutencoes)): ?>
+                                <div class="dashboard-empty">
+                                    Nenhuma manutenção registrada.
+                                </div>
+                            <?php else: ?>
+                                <div class="dashboard-list">
                                     <?php foreach ($ultimasManutencoes as $m): ?>
-                                        <div class="recent-item">
-                                            <div class="recent-left">
-                                                <strong><?= e($m['equipamento'] ?? '') ?></strong>
-                                                <div class="text-muted small"><?= e(($m['bloco'] ?? '') . ' - ' . ($m['sala'] ?? '')) ?></div>
+                                        <?php
+                                            $statusClasse = strtolower(str_replace([' ', 'ç', 'ã'], ['-', 'c', 'a'], $m['status'] ?? ''));
+                                        ?>
+
+                                        <div class="dashboard-list-item">
+                                            <div class="item-icon warning">
+                                                <i class="bi bi-wrench-adjustable"></i>
                                             </div>
-                                            <div class="recent-right text-end">
-                                                <div class="small text-muted"><?= e($m['data'] ?? '') ?></div>
-                                                <div class="status-badge <?= 'status-' . str_replace(' ', '-', $m['status'] ?? '') ?>"><?= e($m['status'] ?? '') ?></div>
+
+                                            <div class="item-main">
+                                                <strong><?= e($m['equipamento'] ?? 'Equipamento') ?></strong>
+                                                <span><?= e(($m['bloco'] ?? '') . ' - ' . ($m['sala'] ?? '')) ?></span>
+                                            </div>
+
+                                            <div class="item-side">
+                                                <small><?= e($m['data'] ?? '') ?></small>
+                                                <span class="mini-status <?= e($statusClasse) ?>">
+                                                    <?= e($m['status'] ?? '') ?>
+                                                </span>
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                            <?php endif; ?>
                         </section>
                     </div>
+
                     <div class="col-lg-6">
-                        <section class="maintenance-card">
-                            <h4>Modificações feitas</h4>
-                            <div class="text-muted small mb-3">Modificações recentes por sala</div>
-                            <div class="list-compact mt-3">
-                                <?php if (empty($topSalas)): ?>
-                                    <p class="text-muted">Nenhum chamado registrado.</p>
-                                <?php else: ?>
-                                    <ul class="top-salas">
-                                        <?php foreach ($topSalas as $key => $count): ?>
-                                            <?php
-                                                [$b, $s] = explode('|', $key);
-                                                $room = obterSala($b, $s);
-                                                $link = $room ? urlSala($room) : '#';
-                                            ?>
-                                            <li>
-                                                <a href="<?= e($link) ?>"><?= e($room['titulo'] ?? ($b . $s)) ?></a>
-                                                <span class="text-muted">(<?= e($count) ?>)</span>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                <?php endif; ?>
+                        <section id="salas-com-chamados" class="dashboard-list-card">
+                            <div class="dashboard-list-header">
+                                <div>
+                                    <h4>Modificações feitas</h4>
+                                    <span>Salas com mais chamados e alterações</span>
+                                </div>
+                                <i class="bi bi-activity"></i>
                             </div>
+
+                            <?php if (empty($topSalas)): ?>
+                                <div class="dashboard-empty">
+                                    Nenhuma modificação registrada.
+                                </div>
+                            <?php else: ?>
+                                <div class="dashboard-list">
+                                    <?php foreach ($topSalas as $key => $count): ?>
+                                        <?php
+                                            [$b, $s] = explode('|', $key);
+                                            $room = obterSala($b, $s);
+                                            $link = $room ? urlSala($room) : '#';
+                                        ?>
+
+                                        <a href="<?= e($link) ?>" class="dashboard-list-item link-item">
+                                            <div class="item-icon info">
+                                                <i class="bi bi-door-open"></i>
+                                            </div>
+
+                                            <div class="item-main">
+                                                <strong><?= e($room['titulo'] ?? ($b . $s)) ?></strong>
+                                                <span><?= e(nomeBloco($b)) ?></span>
+                                            </div>
+
+                                            <div class="item-count">
+                                                <?= e($count) ?>
+                                            </div>
+                                        </a>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
                         </section>
                     </div>
                 </div>
@@ -207,27 +245,57 @@ $topSalas = array_slice($manutencoesPorSala, 0, 6, true);
                     <?php endforeach; ?>
                 </div>
 
-                <section id="ultimas-alteracoes" class="maintenance-card">
-                    <h4>Importações de planilhas</h4>
-                    <p class="text-muted mb-3">Importações de planilhas com data e horários</p>
-                    <div class="list-compact mt-3">
-                        <?php if (empty($ultimasImportacoes)): ?>
-                            <p class="text-muted">Nenhuma importação registrada.</p>
-                        <?php else: ?>
+                <section id="ultimas-alteracoes" class="dashboard-list-card mt-4">
+                    <div class="dashboard-list-header">
+                        <div>
+                            <h4>Importações de planilhas</h4>
+                            <span>Últimas atualizações realizadas por arquivo XLSX</span>
+                        </div>
+
+                        <i class="bi bi-file-earmark-spreadsheet"></i>
+                    </div>
+
+                    <?php if (empty($ultimasImportacoes)): ?>
+                        <div class="dashboard-empty">
+                            Nenhuma importação registrada até o momento.
+                        </div>
+                    <?php else: ?>
+                        <div class="import-history-list">
                             <?php foreach ($ultimasImportacoes as $importacao): ?>
-                                <div class="recent-item">
-                                    <div class="recent-left">
-                                        <strong><?= e($importacao['arquivo'] ?? 'Planilha importada') ?></strong>
-                                        <div class="text-muted small"><?= e($importacao['data'] ?? '') ?> às <?= e($importacao['hora'] ?? '') ?></div>
+                                <div class="import-history-item">
+                                    <div class="item-icon success">
+                                        <i class="bi bi-file-earmark-arrow-up"></i>
                                     </div>
-                                    <div class="recent-right text-end">
-                                        <div class="status-badge"><?= e($importacao['atualizados'] ?? 0) ?> atualizados</div>
-                                        <div class="small text-muted mt-1"><?= e($importacao['criados'] ?? 0) ?> criados</div>
+
+                                    <div class="item-main">
+                                        <strong><?= e($importacao['arquivo'] ?? 'Planilha importada') ?></strong>
+                                        <span>
+                                            <?= e($importacao['data'] ?? '') ?>
+                                            às
+                                            <?= e($importacao['hora'] ?? '') ?>
+                                        </span>
+                                    </div>
+
+                                    <div class="import-stats">
+                                        <div>
+                                            <strong><?= e($importacao['atualizados'] ?? 0) ?></strong>
+                                            <span>atualizados</span>
+                                        </div>
+
+                                        <div>
+                                            <strong><?= e($importacao['criados'] ?? 0) ?></strong>
+                                            <span>criados</span>
+                                        </div>
+
+                                        <div>
+                                            <strong><?= e($importacao['erros'] ?? 0) ?></strong>
+                                            <span>erros</span>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                 </section>
             </section>
         </main>

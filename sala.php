@@ -194,6 +194,7 @@ if ($indiceSalaAtual !== null) {
         </main>
     </div>
 
-    <script src="assets/js/sala.js"></script>
+<script src="assets/js/sala.js"></script>
+<script src="assets/js/agente.js"></script>
 </body>
 </html>

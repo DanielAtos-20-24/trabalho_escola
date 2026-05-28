@@ -215,5 +215,6 @@ $historico = array_filter($manutencoes, function ($item) use ($bloco, $salaCodig
             <?php endif; ?>
         </main>
     </div>
+<script src="assets/js/agente.js"></script>
 </body>
 </html>

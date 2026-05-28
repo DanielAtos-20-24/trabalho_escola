@@ -96,5 +96,6 @@ if (!$sala || empty($equipamentoNome)) {
         </section>
     </main>
 </div>
+<script src="assets/js/agente.js"></script>
 </body>
 </html>

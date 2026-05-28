@@ -106,5 +106,6 @@ require_once __DIR__ . '/dados/salas.php';
         </section>
     </main>
 </div>
+<script src="assets/js/agente.js"></script>
 </body>
 </html>

@@ -126,3 +126,18 @@ function abrirSala(bloco, sala) {
     agentMessage('Abrindo sala ' + sala + '...');
     window.location.href = 'sala.php?bloco=' + encodeURIComponent(bloco) + '&sala=' + encodeURIComponent(sala);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const box = document.getElementById('agentBox');
+
+    if (!box) {
+        return;
+    }
+
+    const paginaAtual = window.location.pathname.split('/').pop();
+
+    if (paginaAtual === '' || paginaAtual === 'index.php') {
+        box.classList.remove('closed');
+        agentMessage('Olá! Bem-vindo ao Estoque COC. Precisa de ajuda? Posso abrir salas, importar planilhas, mostrar chamados ou acessar as últimas alterações.');
+    }
+});
