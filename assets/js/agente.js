@@ -1,8 +1,22 @@
-/* assets/js/agente.js
- * Script organizado do agente virtual
- * Centraliza toda a lógica do widget e exporta comportamento via atributos
- */
 let modoAgente = 'local';
+
+function toggleAgent() {
+    const box = document.getElementById('agentBox');
+
+    if (!box) {
+        return;
+    }
+
+    box.classList.toggle('closed');
+}
+
+function agentMessage(texto) {
+    const msg = document.getElementById('agentMessage');
+
+    if (msg) {
+        msg.innerHTML = texto;
+    }
+}
 
 function definirModoAgente(modo) {
     modoAgente = modo;
@@ -29,214 +43,176 @@ function definirModoAgente(modo) {
     }
 }
 
-(function () {
-    'use strict';
+function agentGo(destino) {
+    processarComandoAgente(destino);
+}
 
-    // Seletores e elementos principais
-    const SELECTORS = {
-        box: 'agentBox',
-        header: 'agentHeader',
-        message: 'agentMessage',
-        input: 'agentInput',
-        form: 'agentForm',
-        actionButtons: '.agent-actions button'
-    };
+function agentSubmit(event) {
+    event.preventDefault();
 
-    // Mapa de ações simples -> url
-    const ACTIONS = {
-        'index': 'index.php',
-        'setores': 'index.php',
-        'importar': 'importar_planilha.php',
-        'importar planilha': 'importar_planilha.php',
-        'manutencao': 'manutencao.php',
-        'manutenção': 'manutencao.php',
-        'dados': 'file:///c:/xampp/htdocs/programa_equipamentos/dados/',
-        'uploads': 'file:///c:/xampp/htdocs/programa_equipamentos/uploads/'
-    };
+    const input = document.getElementById('agentInput');
 
-    // Helpers
-    function $id(id) { return document.getElementById(id); }
-    function qsAll(sel) { return Array.from(document.querySelectorAll(sel)); }
-
-    function setMessage(text) {
-        const el = $id(SELECTORS.message);
-        if (el) el.textContent = String(text || '');
+    if (!input) {
+        return;
     }
 
-    function toggleBox() {
-        const box = $id(SELECTORS.box);
-        if (!box) return;
-        box.classList.toggle('closed');
+    const comando = input.value.trim();
+
+    if (comando === '') {
+        return;
     }
 
-    function openUrl(url) {
-        if (!url) return;
-        if (url.startsWith('file:///')) {
-            window.open(url, '_blank');
-            return;
-        }
-        window.location.href = url;
-    }
+    input.value = '';
+    processarComandoAgente(comando);
+}
 
-    function handleActionKey(key) {
-        const k = String(key || '').toLowerCase().trim();
-        if (ACTIONS[k]) {
-            setMessage('Abrindo ' + k + '...');
-            openUrl(ACTIONS[k]);
-            return true;
-        }
+function normalizarTexto(texto) {
+    return String(texto || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+}
 
-        // pre-redirect shortcuts
-        if (k === 'alteracoes' || k === 'alterações' || k === 'importacoes' || k === 'importações') {
-            setMessage('Abrindo importações...');
-            openUrl('index.php#ultimas-alteracoes');
-            return true;
-        }
-
-        if (k === 'chamados' || k === 'manutencoes' || k === 'manutenções') {
-            setMessage('Abrindo lista de chamados...');
-            openUrl('index.php#salas-com-chamados');
-            return true;
-        }
-
-        return false;
-    }
-
-    function abrirSala(bloco, sala) {
-        setMessage('Abrindo sala ' + sala + '...');
-        openUrl('sala.php?bloco=' + encodeURIComponent(bloco) + '&sala=' + encodeURIComponent(sala));
-    }
-
-    function abrirSalaPorTexto(texto) {
-        const m = String(texto).toUpperCase().match(/\b([ACDE])\s?0?([1-9])\b/);
-        if (!m) return false;
-        const bloco = m[1];
-        let numero = m[2];
-
-        if (bloco === 'D' && Number(numero) > 3) {
-            setMessage('O Bloco D possui somente D01, D02 e D03.');
-            return true;
-        }
-
-        numero = String(numero).padStart(2, '0');
-        abrirSala(bloco, bloco + numero);
-        return true;
-    }
-
-    async function consultarIAAgente(comando) {
-        setMessage('Estou analisando sua solicitação...');
-        try {
-            const resp = await fetch('api/agente_ia.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mensagem: comando })
-            });
-            const dados = await resp.json();
-            if (!dados || !dados.ok) {
-                setMessage(dados && dados.resposta ? dados.resposta : 'Não consegui consultar a IA agora.');
-                return;
-            }
-            setMessage(dados.resposta || 'Encontrei uma opção para você.');
-            if (dados.tipo === 'redirect' && dados.url) {
-                setTimeout(() => openUrl(dados.url), 700);
-            }
-        } catch (err) {
-            setMessage('Erro ao consultar IA. Tente comandos como: importar planilha, ver chamados, abrir sala A01.');
-        }
-    }
-
-    function processarComandoAgente(comando) {
+function processarComandoAgente(comando) {
     if (modoAgente === 'ia') {
         consultarIAAgente(comando);
         return;
     }
 
-    const texto = comando.toLowerCase();
+    const texto = normalizarTexto(comando);
 
-    // restante do código local...
+    if (texto.includes('importar') || texto.includes('planilha') || texto.includes('excel') || texto.includes('xlsx')) {
+        agentMessage('Abrindo a tela de importação de planilha...');
+        setTimeout(() => {
+            window.location.href = 'importar_planilha.php';
+        }, 300);
+        return;
+    }
+
+    if (texto.includes('alteracoes') || texto.includes('importacoes') || texto.includes('ultimas')) {
+        agentMessage('Abrindo últimas alterações...');
+        setTimeout(() => {
+            window.location.href = 'index.php#ultimas-alteracoes';
+        }, 300);
+        return;
+    }
+
+    if (texto.includes('chamado') || texto.includes('manutencao') || texto.includes('modificacoes')) {
+        agentMessage('Abrindo salas com mais chamados...');
+        setTimeout(() => {
+            window.location.href = 'index.php#salas-com-chamados';
+        }, 300);
+        return;
+    }
+
+    if (texto.includes('inicio') || texto.includes('dashboard') || texto.includes('setores') || texto.includes('principal')) {
+        agentMessage('Abrindo painel inicial...');
+        setTimeout(() => {
+            window.location.href = 'index.php';
+        }, 300);
+        return;
+    }
+
+    if (texto.includes('bloco a')) {
+        abrirSala('A', 'A01');
+        return;
+    }
+
+    if (texto.includes('bloco c')) {
+        abrirSala('C', 'C01');
+        return;
+    }
+
+    if (texto.includes('bloco d')) {
+        abrirSala('D', 'D01');
+        return;
+    }
+
+    if (texto.includes('bloco e')) {
+        abrirSala('E', 'E01');
+        return;
+    }
+
+    abrirSalaPorTexto(texto);
 }
 
-    function processarComandoAgente(texto) {
-        const t = String(texto || '').toLowerCase();
+function abrirSalaPorTexto(texto) {
+    const match = String(texto).toUpperCase().match(/\b([ACDE])\s?0?([1-9])\b/);
 
-        // comandos diretos
-        if (t.includes('importar') || t.includes('planilha')) {
-            handleActionKey('importar');
-            return;
-        }
-        if (t.includes('alter') || t.includes('importa')) {
-            handleActionKey('alteracoes');
-            return;
-        }
-        if (t.includes('chamad') || t.includes('manuten')) {
-            handleActionKey('chamados');
-            return;
-        }
-
-        // variações por bloco
-        if (t.includes('bloco a')) { abrirSala('A', 'A01'); return; }
-        if (t.includes('bloco c')) { abrirSala('C', 'C01'); return; }
-        if (t.includes('bloco d')) { abrirSala('D', 'D01'); return; }
-        if (t.includes('bloco e')) { abrirSala('E', 'E01'); return; }
-
-        // tentar extrair sala (A01, C1 etc.)
-        if (abrirSalaPorTexto(t)) return;
-
-        // fallback: consultar IA
-        consultarIAAgente(texto);
+    if (!match) {
+        agentMessage('Não entendi no modo local. Tente: importar planilha, abrir sala D02, ver chamados ou mude para o modo IA.');
+        return;
     }
 
-    // Inicialização e binding de eventos
-    function initAgent() {
-        const box = $id(SELECTORS.box);
-        if (!box) return;
+    const bloco = match[1];
+    let numero = match[2];
 
-        const header = $id(SELECTORS.header);
-        const form = $id(SELECTORS.form);
-        const input = $id(SELECTORS.input);
+    if (bloco === 'D' && Number(numero) > 3) {
+        agentMessage('O Bloco D possui somente D01, D02 e D03.');
+        return;
+    }
 
-        // header toggle
-        if (header) header.addEventListener('click', () => {
-            box.classList.toggle('closed');
-            if (!box.classList.contains('closed') && input) input.focus();
+    if ((bloco === 'A' || bloco === 'C' || bloco === 'E') && Number(numero) > 9) {
+        agentMessage('Esse bloco possui salas de 01 até 09.');
+        return;
+    }
+
+    numero = numero.padStart(2, '0');
+    const sala = bloco + numero;
+
+    abrirSala(bloco, sala);
+}
+
+function abrirSala(bloco, sala) {
+    agentMessage('Abrindo sala ' + sala + '...');
+
+    setTimeout(() => {
+        window.location.href = 'sala.php?bloco=' + encodeURIComponent(bloco) + '&sala=' + encodeURIComponent(sala);
+    }, 300);
+}
+
+async function consultarIAAgente(comando) {
+    agentMessage('Estou consultando a IA...');
+
+    try {
+        const resposta = await fetch('api/agente_ia.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ mensagem: comando })
         });
 
-        // action buttons
-        qsAll(SELECTORS.actionButtons).forEach(btn => {
-            btn.addEventListener('click', (ev) => {
-                const action = btn.getAttribute('data-action') || btn.textContent;
-                if (!box.classList.contains('closed')) {
-                    setMessage('Abrindo ' + action + '...');
-                } else {
-                    box.classList.remove('closed');
-                }
-                handleActionKey(action);
-            });
-        });
+        const dados = await resposta.json();
 
-        // submit
-        if (form) form.addEventListener('submit', function (ev) {
-            ev.preventDefault();
-            if (!input) return;
-            const val = input.value.trim();
-            if (!val) return setMessage('Digite uma ação para continuar.');
-            input.value = '';
-            processarComandoAgente(val);
-        });
-
-        // abrir automaticamente em index
-        const paginaAtual = window.location.pathname.split('/').pop();
-        if (paginaAtual === '' || paginaAtual === 'index.php') {
-            box.classList.remove('closed');
-            setMessage('Olá! Bem-vindo ao Estoque COC. Posso abrir salas, importar planilhas, mostrar chamados ou acessar as últimas alterações.');
+        if (!dados.ok) {
+            agentMessage(dados.resposta || 'Não consegui consultar a IA agora.');
+            return;
         }
+
+        agentMessage(dados.resposta || 'Encontrei uma resposta.');
+
+        if (dados.tipo === 'redirect' && dados.url) {
+            setTimeout(() => {
+                window.location.href = dados.url;
+            }, 700);
+        }
+    } catch (erro) {
+        agentMessage('Não consegui conectar com a IA agora. Use o modo local ou tente novamente depois.');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const box = document.getElementById('agentBox');
+
+    if (!box) {
+        return;
     }
 
-    // Run on DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAgent);
-    } else {
-        initAgent();
-    }
+    const paginaAtual = window.location.pathname.split('/').pop();
 
-})();
+    if (paginaAtual === '' || paginaAtual === 'index.php') {
+        box.classList.remove('closed');
+        agentMessage('Olá! Bem-vindo ao Estoque COC. Precisa de ajuda? Você pode consultar localmente ou pela IA.');
+    }
+});
