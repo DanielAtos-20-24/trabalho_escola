@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/dados/salas.php';
 
+
 $setores = salasSistema();
 $sala = obterSala($_GET['bloco'] ?? '', $_GET['sala'] ?? '');
 $equipamentos = $sala ? equipamentosDaSala($sala) : [];

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/dados/salas.php';
 
+
 $bloco = $_GET['bloco'] ?? '';
 $salaCodigo = $_GET['sala'] ?? '';
 $equipamentoNome = $_GET['equipamento'] ?? '';

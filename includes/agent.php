@@ -1,25 +1,28 @@
-<div class="agent-box closed" id="agentBox">
-    <div class="agent-header" id="agentHeader">
+<div id="agentBox" class="agent-box closed">
+    <div class="agent-header" onclick="toggleAgent()">
         <i class="bi bi-robot"></i>
         <div>
             <strong>Agente virtual</strong>
-            <div class="agent-summary">Clique para abrir o agente e solicitar algo</div>
+            <div class="agent-summary">Digite o que deseja fazer</div>
         </div>
     </div>
 
-    <div class="agent-message" id="agentMessage">Escolha uma opção ou digite uma ação.</div>
-
-    <div class="agent-actions">
-        <button type="button" data-action="index">Ver setores</button>
-        <button type="button" data-action="importar planilha">Importar planilha</button>
-        <button type="button" data-action="manutencao">Ver manutenções</button>
-        <button type="button" data-action="dados">Abrir pasta dados</button>
-        <button type="button" data-action="uploads">Abrir pasta uploads</button>
+    <div id="agentMessage" class="agent-message">
+        Olá! O que deseja fazer? Posso abrir salas, importar planilhas, mostrar chamados ou acessar alterações.
     </div>
 
-    <form id="agentForm" class="agent-form">
-        <input id="agentInput" type="text" placeholder="Digite por exemplo: importar planilha" autocomplete="off" />
-        <button type="submit">Ir</button>
+    <div class="agent-actions">
+        <button type="button" onclick="agentGo('importar')">Importar planilha</button>
+        <button type="button" onclick="agentGo('alteracoes')">Últimas alterações</button>
+        <button type="button" onclick="agentGo('chamados')">Salas com mais chamados</button>
+        <button type="button" onclick="agentGo('A01')">Abrir sala A01</button>
+    </div>
+
+    <form class="agent-form" onsubmit="agentSubmit(event)">
+        <input id="agentInput" type="text" placeholder="Ex: abrir sala D02">
+        <button type="submit">
+            <i class="bi bi-send"></i>
+        </button>
     </form>
 </div>
 
