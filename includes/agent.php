@@ -10,12 +10,22 @@
 
         <div>
             <strong>Assistente COC</strong>
-            <div class="agent-summary">Posso te ajudar a navegar</div>
+            <div class="agent-summary">Escolha como deseja consultar</div>
         </div>
     </div>
 
+    <div class="agent-mode">
+        <button type="button" id="modoLocal" class="agent-mode-btn active" onclick="definirModoAgente('local')">
+            Local
+        </button>
+
+        <button type="button" id="modoIA" class="agent-mode-btn" onclick="definirModoAgente('ia')">
+            IA
+        </button>
+    </div>
+
     <div id="agentMessage" class="agent-message">
-        Olá! O que deseja fazer? Posso abrir salas, importar planilhas, mostrar chamados ou acessar alterações.
+        Olá! Escolha se deseja consultar localmente ou pela IA.
     </div>
 
     <div class="agent-actions">
