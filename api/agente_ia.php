@@ -86,13 +86,12 @@ curl_close($ch);
 if ($respostaApi === false || $statusHttp >= 400) {
     echo json_encode([
         'ok' => false,
-        'resposta' => 'Não consegui consultar a IA agora. Tente usar comandos como: abrir sala D02, importar planilha ou ver chamados.',
-        'erro' => $erroCurl,
-        'status' => $statusHttp
+        'resposta' => 'Erro ao consultar IA. Status HTTP: ' . $statusHttp,
+        'erro_curl' => $erroCurl,
+        'resposta_api' => $respostaApi
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
-
 $dadosApi = json_decode($respostaApi, true);
 $conteudo = $dadosApi['choices'][0]['message']['content'] ?? '';
 

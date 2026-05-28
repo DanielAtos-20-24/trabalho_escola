@@ -242,32 +242,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Initial bindings
-    initBindings();
+// Initial bindings
+initBindings();
 
-    // Optionally open first equipment if present
-    const firstCard = document.querySelector('.equipment-card');
-    if (firstCard) mostrarDetalhes(firstCard);
-});
+const params = new URLSearchParams(window.location.search);
+const equipamentoUrl = params.get('equipamento');
 
-document.addEventListener('DOMContentLoaded', function () {
-    const params = new URLSearchParams(window.location.search);
-    const equipamento = params.get('equipamento');
+if (equipamentoUrl) {
+    const equipamentoNormalizado = equipamentoUrl.toLowerCase().trim();
+    let encontrouEquipamento = false;
 
-    if (!equipamento) {
-        return;
-    }
+    document.querySelectorAll('.equipment-card').forEach(function(card) {
+        const nome = (card.dataset.nome || '').toLowerCase().trim();
 
-    const cards = document.querySelectorAll('.equipment-card');
+        if (nome === equipamentoNormalizado) {
+            encontrouEquipamento = true;
+            mostrarDetalhes(card);
 
-    cards.forEach(function (card) {
-        const nome = card.dataset.nome || '';
-
-        if (nome.toLowerCase() === equipamento.toLowerCase()) {
-            card.click();
-            card.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
+            setTimeout(function() {
+                card.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 250);
         }
     });
-});
+
+    if (!encontrouEquipamento) {
+        const firstCard = document.querySelector('.equipment-card');
+        if (firstCard) mostrarDetalhes(firstCard);
+    }
+} else {
+    const firstCard = document.querySelector('.equipment-card');
+    if (firstCard) mostrarDetalhes(firstCard);
+}
+
