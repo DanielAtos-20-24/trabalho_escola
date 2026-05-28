@@ -241,8 +241,7 @@ file_put_contents(
 
         <a href="importar_planilha.php" class="menu-link active">
             <i class="bi bi-file-earmark-arrow-up"></i> Nova importação
-        </a>
-    </aside>
+        </a>        <?php include __DIR__ . '/includes/agent.php'; ?>    </aside>
 
     <main class="content">
         <div class="page-header">

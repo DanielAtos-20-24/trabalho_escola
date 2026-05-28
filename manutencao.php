@@ -64,6 +64,7 @@ $historico = array_filter($manutencoes, function ($item) use ($bloco, $salaCodig
             <a href="sala.php?bloco=<?= e($bloco) ?>&sala=<?= e($salaCodigo) ?>" class="menu-link active">
                 <i class="bi bi-arrow-left"></i> Voltar para sala
             </a>
+            <?php include __DIR__ . '/includes/agent.php'; ?>
         </aside>
 
         <main class="content">

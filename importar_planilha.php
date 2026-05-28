@@ -33,6 +33,7 @@ require_once __DIR__ . '/dados/salas.php';
         <a href="importar_planilha.php" class="menu-link active">
             <i class="bi bi-file-earmark-arrow-up"></i> Importar planilha
         </a>
+        <?php include __DIR__ . '/includes/agent.php'; ?>
     </aside>
 
     <main class="content">

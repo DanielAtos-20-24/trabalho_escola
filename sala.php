@@ -71,6 +71,7 @@ if ($indiceSalaAtual !== null) {
                     <i class="bi <?= e($setor['icone']) ?>"></i> <?= e($setor['nome']) ?>
                 </a>
             <?php endforeach; ?>
+            <?php include __DIR__ . '/includes/agent.php'; ?>
         </aside>
 
         <main class="content">
