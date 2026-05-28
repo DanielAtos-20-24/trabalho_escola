@@ -32,11 +32,20 @@ Ações disponíveis:
 Quando a ação depender de escolher um equipamento, explique:
 "Abra a sala, clique no equipamento desejado e use o botão correspondente."
 
-Responda SEMPRE em JSON válido, neste formato:
+Responda SOMENTE com JSON puro, sem markdown, sem crases e sem explicações fora do JSON.
+
+Formato obrigatório quando for redirecionar:
 {
-  "tipo": "redirect" ou "mensagem",
-  "url": "URL quando houver redirect",
-  "resposta": "mensagem curta e objetiva"
+  "tipo": "redirect",
+  "url": "index.php",
+  "resposta": "Abrindo o painel inicial."
+}
+
+Formato obrigatório quando for apenas orientar:
+{
+  "tipo": "mensagem",
+  "url": "",
+  "resposta": "Abra a sala, clique no equipamento desejado e use o botão correspondente."
 }
 PROMPT;
 

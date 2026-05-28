@@ -73,6 +73,34 @@ function normalizarTexto(texto) {
         .replace(/[\u0300-\u036f]/g, '');
 }
 
+function detectarEquipamento(texto) {
+    const mapa = {
+        'computador': 'Computador',
+        'pc': 'Computador',
+        'monitor': 'Monitor',
+        'teclado': 'Teclado',
+        'mouse': 'Mouse',
+        'estabilizador': 'Estabilizador',
+        'som': 'Som',
+        'caixa de som': 'Som',
+        'projetor': 'Projetor',
+        'data show': 'Projetor',
+        'datashow': 'Projetor',
+        'lousa': 'Lousa',
+        'quadro': 'Lousa'
+    };
+
+    const textoNormalizado = normalizarTexto(texto);
+
+    for (const termo in mapa) {
+        if (textoNormalizado.includes(normalizarTexto(termo))) {
+            return mapa[termo];
+        }
+    }
+
+    return '';
+}
+
 function processarComandoAgente(comando) {
     if (modoAgente === 'ia') {
         consultarIAAgente(comando);
@@ -159,15 +187,25 @@ function abrirSalaPorTexto(texto) {
 
     numero = numero.padStart(2, '0');
     const sala = bloco + numero;
+    const equipamento = detectarEquipamento(texto);
 
-    abrirSala(bloco, sala);
+    abrirSala(bloco, sala, equipamento);
 }
 
-function abrirSala(bloco, sala) {
-    agentMessage('Abrindo sala ' + sala + '...');
+function abrirSala(bloco, sala, equipamento = '') {
+    let mensagem = 'Abrindo sala ' + sala;
+
+    let url = 'sala.php?bloco=' + encodeURIComponent(bloco) + '&sala=' + encodeURIComponent(sala);
+
+    if (equipamento) {
+        mensagem += ' no equipamento ' + equipamento;
+        url += '&equipamento=' + encodeURIComponent(equipamento);
+    }
+
+    agentMessage(mensagem + '...');
 
     setTimeout(() => {
-        window.location.href = 'sala.php?bloco=' + encodeURIComponent(bloco) + '&sala=' + encodeURIComponent(sala);
+        window.location.href = url;
     }, 300);
 }
 

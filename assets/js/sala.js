@@ -248,3 +248,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const firstCard = document.querySelector('.equipment-card');
     if (firstCard) mostrarDetalhes(firstCard);
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const equipamento = params.get('equipamento');
+
+    if (!equipamento) {
+        return;
+    }
+
+    const cards = document.querySelectorAll('.equipment-card');
+
+    cards.forEach(function (card) {
+        const nome = card.dataset.nome || '';
+
+        if (nome.toLowerCase() === equipamento.toLowerCase()) {
+            card.click();
+            card.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    });
+});
