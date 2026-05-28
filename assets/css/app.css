@@ -647,6 +647,90 @@ body {
     border-radius: 12px;
 }
 
+.dashboard-panels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+}
+
+.dashboard-panel {
+    padding: 24px;
+    background: linear-gradient(180deg, #1e293b, #172033);
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.22);
+}
+
+.panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.panel-header span {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.panel-header i {
+    color: var(--primary);
+    font-size: 28px;
+}
+
+.panel-empty {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.activity-list {
+    display: grid;
+    gap: 12px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px;
+    background: rgba(15, 23, 42, 0.78);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.activity-item strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+.activity-item span {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.activity-item small {
+    padding: 6px 10px;
+    color: var(--primary);
+    white-space: nowrap;
+    background: rgba(249, 115, 22, 0.12);
+    border: 1px solid rgba(249, 115, 22, 0.35);
+    border-radius: 999px;
+    font-weight: 800;
+}
+
 @media (max-width: 992px) {
     .sidebar {
         position: relative;

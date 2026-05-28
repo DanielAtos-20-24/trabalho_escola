@@ -185,6 +185,31 @@ file_put_contents(
     $arquivoEquipamentos,
     json_encode($equipamentos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
 );
+
+$arquivoImportacoes = __DIR__ . '/dados/importacoes.json';
+
+if (!file_exists($arquivoImportacoes)) {
+    file_put_contents($arquivoImportacoes, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+$importacoes = json_decode(file_get_contents($arquivoImportacoes), true) ?? [];
+
+$importacoes[] = [
+    'id' => uniqid('imp_', true),
+    'arquivo' => $nomeUpload,
+    'data' => date('Y-m-d'),
+    'hora' => date('H:i:s'),
+    'linhas_lidas' => $totalLidas,
+    'criados' => $totalCriadas,
+    'atualizados' => $totalAtualizadas,
+    'erros' => count($erros),
+    'criado_em' => date('Y-m-d H:i:s'),
+];
+
+file_put_contents(
+    $arquivoImportacoes,
+    json_encode($importacoes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

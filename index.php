@@ -2,6 +2,19 @@
 require_once __DIR__ . '/dados/salas.php';
 
 $setores = salasSistema();
+
+function carregarJson($caminho)
+{
+    if (!file_exists($caminho)) {
+        return [];
+    }
+
+    return json_decode(file_get_contents($caminho), true) ?? [];
+}
+
+$importacoes = carregarJson(__DIR__ . '/dados/importacoes.json');
+$ultimasImportacoes = array_slice(array_reverse($importacoes), 0, 5);
+
 // --- Estatísticas para dashboard na página inicial ---
 $arquivoManutencoes = __DIR__ . '/dados/manutencoes.json';
 if (!file_exists($arquivoManutencoes)) {
@@ -192,6 +205,41 @@ $topSalas = array_slice($manutencoesPorSala, 0, 6, true);
                                     </a>
                                 <?php endforeach; ?>
                             </div>
+                            <div id="ultimas-alteracoes" class="dashboard-panels mt-4">
+                            <section class="dashboard-panel">
+                                <div class="panel-header">
+                                    <div>
+                                        <h3>Últimas alterações</h3>
+                                        <span>Importações de planilhas com data e horário</span>
+                                    </div>
+
+                                    <i class="bi bi-clock-history"></i>
+                                </div>
+
+                                <?php if (empty($ultimasImportacoes)): ?>
+                                    <p class="panel-empty">Nenhuma importação registrada.</p>
+                                <?php else: ?>
+                                    <div class="activity-list">
+                                        <?php foreach ($ultimasImportacoes as $importacao): ?>
+                                            <div class="activity-item">
+                                                <div>
+                                                    <strong><?= e($importacao['arquivo'] ?? 'Planilha importada') ?></strong>
+                                                    <span>
+                                                        <?= e($importacao['data'] ?? '') ?>
+                                                        às
+                                                        <?= e($importacao['hora'] ?? '') ?>
+                                                    </span>
+                                                </div>
+
+                                                <small>
+                                                    <?= e($importacao['atualizados'] ?? 0) ?> atualizados
+                                                </small>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </section>
+                        </div>
                         </section>
                     </div>
                 <?php endforeach; ?>

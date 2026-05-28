@@ -1,0 +1,24 @@
+[
+    {
+        "id": "imp_6a183a96819c05.91459979",
+        "arquivo": "importacao_20260528_145238.xlsx",
+        "data": "2026-05-28",
+        "hora": "14:52:38",
+        "linhas_lidas": 10,
+        "criados": 0,
+        "atualizados": 10,
+        "erros": 0,
+        "criado_em": "2026-05-28 14:52:38"
+    },
+    {
+        "id": "imp_6a183ba48baee3.74351339",
+        "arquivo": "importacao_20260528_145708.xlsx",
+        "data": "2026-05-28",
+        "hora": "14:57:08",
+        "linhas_lidas": 10,
+        "criados": 0,
+        "atualizados": 10,
+        "erros": 0,
+        "criado_em": "2026-05-28 14:57:08"
+    }
+]
